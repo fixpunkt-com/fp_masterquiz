@@ -294,3 +294,6 @@ ChangeLog
   PHP 8.4 Bugfix.
 
   New home url: https://github.com/fixpunkt-com/fp_masterquiz
+
+7.2.0:
+  Extension configuration file added for the ajax mode.

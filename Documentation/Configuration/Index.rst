@@ -128,6 +128,9 @@ AJAX*) If you enable AJAX, you should know this:
   If it is still not working, you can disable the cHash-check in the install tool:
   [FE][pageNotFoundOnCHashError] = false
   Conclusion: use the Ajax-version only if you really need it.
+  But new since version 7.2.0: some parameters can be excluded from the cHash generation
+  if you enable it via the "Extension Configuration". Then you don´t need to change
+  enforceValidation or pageNotFoundOnCHashError.
 
 - *Important*: if you don´t use the plugin
   "Show a selected quiz and use a pagebrowser (you need to select the storage folder too)" /

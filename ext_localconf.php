@@ -113,5 +113,15 @@ call_user_func(
                 ],
             ],
         ];
+
+        $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('fp_masterquiz');
+        $addToExcludedParameters = (bool)$configurationUtility['addToExcludedParameters'];
+        if ($addToExcludedParameters) {
+            // Exclude fpmasterquiz_show and other parameters from cacheHash calculation
+            $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'] = array_merge(
+                $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'],
+                ['^tx_fpmasterquiz_show', '^answer', '^quest', '_']
+            );
+        }
     }
 );

@@ -205,3 +205,6 @@ Dokumentation schon wieder.
 PHP 8.4 Bugfix.
 
 Neuer Ort bei GitHub: https://github.com/fixpunkt-com/fp_masterquiz
+
+7.2.0:
+Extension-Konfigurations-Datei für den Ajax-Modus hinzugefügt.

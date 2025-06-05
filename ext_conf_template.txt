@@ -1,0 +1,2 @@
+# cat=basic//30; type=boolean; label=For the ajax-mode: add this variables to cacheHash/excludedParameters: ^tx_fpmasterquiz_show,^answer,^quest,_
+addToExcludedParameters = 0
