@@ -1539,10 +1539,8 @@ class QuizController extends ActionController
 
     /**
      * action show
-     *
-     * @param \Fixpunkt\FpMasterquiz\Domain\Model\Quiz||null $quiz
      */
-    public function showAction(Quiz $quiz = null): ResponseInterface
+    public function showAction(?Quiz $quiz = null): ResponseInterface
     {
         if (!$quiz instanceof Quiz) {
             $quiz = $this->getDefaultQuiz();
@@ -1674,10 +1672,8 @@ class QuizController extends ActionController
 
     /**
      * action showByTag
-     *
-     * @param \Fixpunkt\FpMasterquiz\Domain\Model\Quiz||null $quiz
      */
-    public function showByTagAction(Quiz $quiz = null): ResponseInterface
+    public function showByTagAction(?Quiz $quiz = null): ResponseInterface
     {
         if (!$quiz instanceof Quiz) {
             $quiz = $this->getDefaultQuiz();
@@ -1976,10 +1972,8 @@ class QuizController extends ActionController
 
     /**
      * action result
-     *
-     * @param \Fixpunkt\FpMasterquiz\Domain\Model\Quiz||null $quiz
      */
-    public function resultAction(Quiz $quiz = null): ResponseInterface
+    public function resultAction(?Quiz $quiz = null): ResponseInterface
     {
         if (!$quiz instanceof Quiz) {
             $quiz = $this->getDefaultQuiz();
@@ -2043,10 +2037,8 @@ class QuizController extends ActionController
 
     /**
      * action highscore
-     *
-     * @param \Fixpunkt\FpMasterquiz\Domain\Model\Quiz||null $quiz
      */
-    public function highscoreAction(Quiz $quiz = null): ResponseInterface
+    public function highscoreAction(?Quiz $quiz = null): ResponseInterface
     {
         if (!$quiz instanceof Quiz) {
             $quiz = $this->getDefaultQuiz();
@@ -2289,7 +2281,7 @@ class QuizController extends ActionController
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($actionMenu);
     }
 
-    protected function getModuleUri(string $controller = null, string $action = null): string
+    protected function getModuleUri(?string $controller = null, ?string $action = null): string
     {
         return $this->uriBuilder->reset()->uriFor($action, null, $controller, 'mod1');
     }

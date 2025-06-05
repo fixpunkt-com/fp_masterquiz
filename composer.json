@@ -23,10 +23,10 @@
 			"Fixpunkt\\FpMasterquiz\\Tests\\" : "Tests"
 		}
 	},
-	"homepage" : "https://github.com/bihor/fp_masterquiz",
+	"homepage" : "https://github.com/fixpunkt-com/fp_masterquiz",
 	"license" : "GPL-3.0-or-later",
 	"keywords" : [
-		"quiz poll myquizpoll"
+		"quiz poll masterquiz"
 	],
 	"extra": {
 		"typo3/cms": {

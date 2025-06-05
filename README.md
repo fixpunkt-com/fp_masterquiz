@@ -1,6 +1,6 @@
 # fp_masterquiz
 
-version 7.1.1
+version 7.1.2
 
 TYPO3 extension to create a quiz, poll or test. The participant result will be saved in the DB too and can be deleted automatically via Scheduler.
 
@@ -51,7 +51,8 @@ Changes in 7.1.0:
 - PageTitleProvider added.
 - Documentation again.
 
-Changes in 7.1.1:
+Changes in 7.1.2:
+- PHP 8.4 Bugfix.
 - New home url: https://github.com/fixpunkt-com/fp_masterquiz
 
 You find the whole changelog here:
