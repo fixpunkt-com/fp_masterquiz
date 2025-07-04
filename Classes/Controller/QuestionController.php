@@ -53,7 +53,7 @@ class QuestionController extends ActionController
     /**
      * action move
      */
-    public function moveAction(Quiz $quiz, Question $question = NULL): ResponseInterface
+    public function moveAction(Quiz $quiz, ?Question $question = NULL): ResponseInterface
     {
         $pid = $this->id;
         if ($question instanceof Question) {
@@ -99,7 +99,7 @@ class QuestionController extends ActionController
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($actionMenu);
     }
 
-    protected function getModuleUri(string $controller = null, string $action = null): string
+    protected function getModuleUri(?string $controller = null, ?string $action = null): string
     {
         return $this->uriBuilder->reset()->uriFor($action, null, $controller, 'mod1');
     }

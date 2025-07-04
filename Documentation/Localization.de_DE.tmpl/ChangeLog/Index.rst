@@ -208,3 +208,6 @@ Neuer Ort bei GitHub: https://github.com/fixpunkt-com/fp_masterquiz
 
 7.2.0:
 Extension-Konfigurations-Datei für den Ajax-Modus hinzugefügt.
+
+7.2.1:
+PHP 8.4 Bugfix.

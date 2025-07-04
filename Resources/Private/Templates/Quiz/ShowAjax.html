@@ -4,10 +4,10 @@
 	<f:section name="content">
 	<f:if condition="{final} == 0">
 		<f:then>
-		
+
 			<f:if condition="{showAnswers}">
 				<f:then>
-				
+
 					<!--  show answers after submit -->
 					<f:for each="{participant.selections}" as="selection" iteration="pageiterator">
 						<f:if condition="{pageiterator.cycle} >= {from}">
@@ -19,7 +19,7 @@
 					<script>
 					quizanswers = 1;
 					</script>
-					
+
 				</f:then>
 				<f:else>
 					<f:if condition="{settings.closed} || {quiz.closed}">
@@ -61,7 +61,7 @@
 					</f:if>
 				</f:else>
 			</f:if>
-			
+
 			<script>
 			quizfinal = 0;
 			thisPage = {page};
@@ -76,13 +76,14 @@
 					'; show answers: '+$('#quiz-form'+ceuid+' #quiz-form-answers').val());
 			}
 			</script>
-			
+
 		</f:then>
 		<f:else>
-		
+
 			<f:render partial="Quiz/FinalPage" arguments="{_all}" />
 
 			<script>
+                var text_goon = '{f:translate(key: "text.goon")}';
 				var tmpTimePeriod = parseInt('{quiz.timeperiod}');
 				if (tmpTimePeriod > 0) {
 					clearInterval(quizIntervalId);
@@ -113,7 +114,7 @@
 					$('#quiz-form'+ceuid).submit();
 				});
 			</script>
-			
+
 		</f:else>
 	</f:if>
 	<f:if condition="{settings.debug} == 1">

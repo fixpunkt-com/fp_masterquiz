@@ -297,3 +297,6 @@ ChangeLog
 
 7.2.0:
   Extension configuration file added for the ajax mode.
+
+7.2.1:
+  PHP 8.4 Bugfix.

@@ -155,7 +155,7 @@ class ParticipantController extends ActionController
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($actionMenu);
     }
 
-    protected function getModuleUri(string $controller = null, string $action = null): string
+    protected function getModuleUri(?string $controller = null, ?string $action = null): string
     {
         return $this->uriBuilder->reset()->uriFor($action, null, $controller, 'mod1');
     }
