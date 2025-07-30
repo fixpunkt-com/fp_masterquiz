@@ -211,3 +211,6 @@ Extension-Konfigurations-Datei für den Ajax-Modus hinzugefügt.
 
 7.2.1:
 PHP 8.4 Bugfix.
+
+7.2.2:
+Update-Skript für Rechte hinzugefügt.
