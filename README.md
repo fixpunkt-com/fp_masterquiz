@@ -64,5 +64,8 @@ Changes in 7.2.1:
 Changes in 7.2.2:
 - Update script for permissions added.
 
+Changes in 7.2.3:
+- Prevent of sending empty input field with enter.
+
 You find the whole changelog here:
 https://raw.githubusercontent.com/fixpunkt-com/fp_masterquiz/refs/heads/master/Documentation/ChangeLog/Index.rst

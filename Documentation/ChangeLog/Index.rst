@@ -303,3 +303,6 @@ ChangeLog
 
 7.2.2:
   Update script for permissions added.
+
+7.2.3:
+  Prevent of sending empty input field with enter.

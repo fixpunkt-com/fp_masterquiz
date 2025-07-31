@@ -214,3 +214,6 @@ PHP 8.4 Bugfix.
 
 7.2.2:
 Update-Skript für Rechte hinzugefügt.
+
+7.2.3:
+Verhindere, dass ein leeres Input-Feld per Enter abgesendet wird.

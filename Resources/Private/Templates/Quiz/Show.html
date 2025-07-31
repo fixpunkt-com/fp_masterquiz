@@ -369,6 +369,21 @@
 					</f:else>
 				</f:if>
 			</f:form>
+            <script>
+                let formid = "quiz-form" + ceuid;
+                let val = document.getElementById(formid);
+                val.onkeypress = function (key) {
+                    let btn = 0 || key.keyCode || key.charCode;
+                    if (btn == 13) {
+                        // TODO: auf optional prüfen
+                        let formbox = $('#'+formid).find('.quiz-inputbox');
+                        if (formbox && formbox[0] && !formbox[1] && !formbox[0].value) {
+                            // alert("Es ist nur ein leeres Textfeld vorhanden. Bitte Wert eintragen!");
+                            key.preventDefault();
+                        }
+                    }
+                }
+            </script>
 		</f:else>
 		</f:if>
 
