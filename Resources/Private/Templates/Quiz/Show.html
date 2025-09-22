@@ -375,7 +375,7 @@
                 val.onkeypress = function (key) {
                     let btn = 0 || key.keyCode || key.charCode;
                     if (btn == 13) {
-                        // TODO: auf optional prüfen
+                        // Return absenden verhindern bei nicht-optionalen Textfeld-Antworten
                         let formbox = $('#'+formid).find('.quiz-inputbox');
                         if (formbox && formbox[0] && !formbox[1] && !formbox[0].value) {
                             let formdiv = formbox.closest('.quiz-input');
