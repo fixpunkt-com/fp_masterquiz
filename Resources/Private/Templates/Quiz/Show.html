@@ -378,8 +378,11 @@
                         // TODO: auf optional prüfen
                         let formbox = $('#'+formid).find('.quiz-inputbox');
                         if (formbox && formbox[0] && !formbox[1] && !formbox[0].value) {
-                            // alert("Es ist nur ein leeres Textfeld vorhanden. Bitte Wert eintragen!");
-                            key.preventDefault();
+                            let formdiv = formbox.closest('.quiz-input');
+                            if (formdiv && !formdiv.hasClass( "quiz-answer-optional" )) {
+                                // alert("Es ist nur ein leeres Textfeld vorhanden. Bitte Wert eintragen!");
+                                key.preventDefault();
+                            }
                         }
                     }
                 }
