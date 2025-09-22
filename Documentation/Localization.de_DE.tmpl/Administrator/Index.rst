@@ -120,6 +120,21 @@ Teilnehmereinträge exportieren
   Ordner (pid) exportieren können. Die CSV-Datei wird in den fileadmin-Ordner geschrieben.
 
 
+.. _logging:
+
+Logging
+-------
+
+Das Logging nach typo3_fpmasterquiz_xxx.log kann in der additional.php überschrieben werden, z.B. mit::
+
+    // Explicitly disable logging of FpMasterquiz
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Fixpunkt']['FpMasterquiz']['Controller']['writerConfiguration'] = [
+        \Psr\Log\LogLevel::DEBUG => [
+            \TYPO3\CMS\Core\Log\Writer\NullWriter::class => [],
+        ],
+    ];
+
+
 .. _security-fix:
 
 Sicherheitsfix in Version 3.5.2

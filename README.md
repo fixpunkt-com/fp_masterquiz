@@ -1,6 +1,6 @@
 # fp_masterquiz
 
-version 7.2.2
+version 7.2.4
 
 TYPO3 extension to create a quiz, poll or test. The participant result will be saved in the DB too and can be deleted automatically via Scheduler.
 
@@ -58,14 +58,13 @@ Changes in 7.1.2:
 Changes in 7.2.0:
 - Extension configuration file added for the ajax mode.
 
-Changes in 7.2.1:
-- PHP 8.4 Bugfix.
-
 Changes in 7.2.2:
+- PHP 8.4 Bugfix.
 - Update script for permissions added.
 
-Changes in 7.2.3:
+Changes in 7.2.4:
 - Prevent of sending empty input field with enter.
+- Make logging into typo3_fpmasterquiz_xxx.log optional.
 
 You find the whole changelog here:
 https://raw.githubusercontent.com/fixpunkt-com/fp_masterquiz/refs/heads/master/Documentation/ChangeLog/Index.rst

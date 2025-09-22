@@ -298,11 +298,12 @@ ChangeLog
 7.2.0:
   Extension configuration file added for the ajax mode.
 
-7.2.1:
+7.2.2:
   PHP 8.4 Bugfix.
 
-7.2.2:
   Update script for permissions added.
 
-7.2.3:
+7.2.4:
   Prevent of sending empty input field with enter.
+
+  Make logging into typo3_fpmasterquiz_xxx.log optional.

@@ -105,14 +105,16 @@ call_user_func(
             ];
         }
         // Custom Logger
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Fixpunkt']['FpMasterquiz']['Controller']['writerConfiguration'] = [
-            // Configuration including all levels with higher severity
-            \Psr\Log\LogLevel::DEBUG => [
-                \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
-                    'logFileInfix' => 'fpmasterquiz',
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['LOG']['Fixpunkt']['FpMasterquiz']['Controller']['writerConfiguration'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['LOG']['Fixpunkt']['FpMasterquiz']['Controller']['writerConfiguration'] = [
+                // Configuration including all levels with higher severity
+                \Psr\Log\LogLevel::DEBUG => [
+                    \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+                        'logFileInfix' => 'fpmasterquiz',
+                    ],
                 ],
-            ],
-        ];
+            ];
+        }
 
         $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('fp_masterquiz');
         $addToExcludedParameters = (bool)$configurationUtility['addToExcludedParameters'];

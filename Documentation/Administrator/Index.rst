@@ -114,6 +114,21 @@ Exporting participant entries
 * There is a scheduler task which whom you can export participants from a single folder (pid). The csv-file will be written to fileadmin.
 
 
+.. _logging:
+
+Logging
+-------
+
+The logging into typo3_fpmasterquiz_xxx.log can be overridden in the additional.php, for example with::
+
+    // Explicitly disable logging of FpMasterquiz
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Fixpunkt']['FpMasterquiz']['Controller']['writerConfiguration'] = [
+        \Psr\Log\LogLevel::DEBUG => [
+            \TYPO3\CMS\Core\Log\Writer\NullWriter::class => [],
+        ],
+    ];
+
+
 .. _security-fix:
 
 Security fix in version 3.5.2

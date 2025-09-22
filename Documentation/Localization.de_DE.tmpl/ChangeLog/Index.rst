@@ -209,11 +209,12 @@ Neuer Ort bei GitHub: https://github.com/fixpunkt-com/fp_masterquiz
 7.2.0:
 Extension-Konfigurations-Datei für den Ajax-Modus hinzugefügt.
 
-7.2.1:
+7.2.2:
 PHP 8.4 Bugfix.
 
-7.2.2:
 Update-Skript für Rechte hinzugefügt.
 
-7.2.3:
+7.2.4:
 Verhindere, dass ein leeres Input-Feld per Enter abgesendet wird.
+
+Mache das Logging nach typo3_fpmasterquiz_xxx.log optional.
