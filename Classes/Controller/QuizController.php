@@ -473,7 +473,7 @@ class QuizController extends ActionController
             $showAnswerPage = false;
         } else {
             if ($reachedPage >= $page) {
-                // beantwortete Seiten soll man nicht nochmal beantworten können
+                // Beantwortete Seiten soll man nicht nochmal beantworten können
                 $showAnswers = true;
             }
 
@@ -881,14 +881,14 @@ class QuizController extends ActionController
         }
 
         if (!$mandatoryNotAnswered) {
-            // toggle mode for show answers after submit questions
+            // toggle mode for show answers after submitting questions
             if ($showAnswerPage) {
                 $showAnswersNext = $showAnswers == 1 ? 0 : 1;
             } else {
                 $showAnswersNext = 0;
             }
         } else {
-            // benötigte Felder wurden nicht ausgefüllt
+            // Benötigte Felder wurden nicht ausgefüllt
             $showAnswers = 0;
             $nextPage = $this->request->hasArgument('currentPage') ? intval($this->request->getArgument('currentPage')) : 1;
             if ($showAnswerPage) {
@@ -911,7 +911,7 @@ class QuizController extends ActionController
             $debug .= "\ntime period=" . $quiz->getTimeperiod() . '; time passed: ' . $this->participant->getTimePassed();
         }
 
-        if ($page > $pages) {
+        if (($page > $pages) && ($this->participant->getUid() > 0)) {
             // finale Auswertung ...
             $final = 1;
             $showAnswersNext = 0;
@@ -928,7 +928,7 @@ class QuizController extends ActionController
 
                     if ($categoryUid) {
                         if (!isset($finalCategoryArray['uid'])) {
-                            // hole die am meisten angeklickte Kategorie + andere Daten nur einmal
+                            // Hole die am meisten angeklickte Kategorie + andere Daten nur einmal
                             $finalCategoryArray = $this->participant->getCategoryMost();
                         }
 
@@ -976,13 +976,13 @@ class QuizController extends ActionController
 
             // Alle Ergebnisse nicht nur das eigene anzeigen
             if ($this->settings['showAllAnswers'] == 1) {
-                // alle Fragen durchgehen, die der User beantwortet hat:
+                //Alle Fragen durchgehen, die der User beantwortet hat:
                 foreach ($this->participant->getSortedSelections() as $selection) {
                     $oneQuestion = $selection->getQuestion();
                     $oneQuestionCategories = $oneQuestion->getQmode() == 8 ? $oneQuestion->getCategoriesArray() : [];
 
                     $debug .= $this->setAllUserAnswersForOneQuestion($oneQuestion, 0, false);
-                    // eigene Ergebnisse durchgehen
+                    // Eigene Ergebnisse durchgehen
                     $ownResults = [];
                     foreach ($selection->getAnswers() as $oneAnswer) {
                         if ($this->withDebug()) {
@@ -1014,7 +1014,7 @@ class QuizController extends ActionController
                     }
                 }
             } elseif ($this->settings['showOwnAnswers']) {
-                // alle Fragen durchgehen, die der User beantwortet hat:
+                // Alle Fragen durchgehen, die der User beantwortet hat:
                 foreach ($this->participant->getSortedSelections() as $selection) {
                     $oneQuestion = $selection->getQuestion();
                     if ($oneQuestion->getQmode() == 8) {
