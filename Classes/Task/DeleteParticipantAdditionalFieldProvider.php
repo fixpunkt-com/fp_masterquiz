@@ -31,7 +31,7 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
 				$taskInfo['page'] = $task->getPage();
 			}
 		}
-  
+
 		if (empty($taskInfo['days'])) {
 			if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
 				$taskInfo['days'] = '0';
@@ -39,7 +39,7 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
 				$taskInfo['days'] = $task->getDays();
 			}
 		}
-  
+
 		if (empty($taskInfo['flag'])) {
 			if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
 		        $taskInfo['flag'] = 0;
@@ -47,7 +47,7 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
 		        $taskInfo['flag'] = $task->getFlag();
 		    }
 		}
-		
+
 		// Ordner
 		$fieldId = 'task_page';
 		$fieldCode = '<input type="text" name="tx_scheduler[fp_masterquiz][page]" id="' . $fieldId . '" value="' . htmlspecialchars((string) $taskInfo['page']) . '"/>';
@@ -66,7 +66,7 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
 		$additionalFields[$fieldId] = ['code' => $fieldCode, 'label' => $label];
 		return $additionalFields;
 	}
-	
+
 	/**
 	 * This method checks any additional data that is relevant to the specific task.
 	 * If the task class is not relevant, the method is expected to return TRUE.
@@ -90,6 +90,7 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
                 ->fetchOne();
 			if ($count == 0) {
 				$isValid = FALSE;
+                // @extensionScannerIgnoreLine
 				$this->addMessage(
 					$GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidPage'),
 					ContextualFeedbackSeverity::ERROR
@@ -97,23 +98,25 @@ class DeleteParticipantAdditionalFieldProvider extends AbstractAdditionalFieldPr
 			}
 		} else {
 			$isValid = FALSE;
+            // @extensionScannerIgnoreLine
 			$this->addMessage(
 				$GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidPage'),
 				ContextualFeedbackSeverity::ERROR
 			);
 		}
-        
+
 		if (intval($submittedData['fp_masterquiz']['days']) < 1) {
 			$isValid = FALSE;
+            // @extensionScannerIgnoreLine
 			$this->addMessage(
 				$GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidDays'),
 				ContextualFeedbackSeverity::ERROR
 			);
 		}
-  
+
 		return $isValid;
 	}
-	
+
 	/**
 	 * This method is used to save any additional input into the current task object
 	 * if the task class matches.

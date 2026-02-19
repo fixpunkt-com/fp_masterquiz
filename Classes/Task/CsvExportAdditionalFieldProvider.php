@@ -31,7 +31,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 $taskInfo['csvfile'] = $task->getCsvfile();
             }
         }
-        
+
         if (empty($taskInfo['page'])) {
             if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
                 $taskInfo['page'] = '';
@@ -39,7 +39,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 $taskInfo['page'] = $task->getPage();
             }
         }
-        
+
         if (empty($taskInfo['separator'])) {
             if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
                 $taskInfo['separator'] = '"';
@@ -47,7 +47,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 $taskInfo['separator'] = $task->getSeparator();
             }
         }
-        
+
         if (empty($taskInfo['delimiter'])) {
             if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
                 $taskInfo['delimiter'] = ';';
@@ -55,7 +55,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 $taskInfo['delimiter'] = $task->getDelimiter();
             }
         }
-        
+
         if (empty($taskInfo['ansdelimiter'])) {
             if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
                 $taskInfo['ansdelimiter'] = ', ';
@@ -63,7 +63,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 $taskInfo['ansdelimiter'] = $task->getAnswersDelimiter();
             }
         }
-        
+
         if (empty($taskInfo['convert'])) {
             if ($currentSchedulerModuleAction == \TYPO3\CMS\Scheduler\SchedulerManagementAction::ADD) {
                 $taskInfo['convert'] = 0;
@@ -130,6 +130,7 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 ->fetchOne();
             if ($count == 0) {
                 $isValid = FALSE;
+                // @extensionScannerIgnoreLine
                 $this->addMessage(
                     $GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidPage'),
                     ContextualFeedbackSeverity::ERROR
@@ -137,20 +138,22 @@ class CsvExportAdditionalFieldProvider extends AbstractAdditionalFieldProvider
             }
         } else {
             $isValid = FALSE;
+            // @extensionScannerIgnoreLine
             $this->addMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidPage'),
                 ContextualFeedbackSeverity::ERROR
             );
         }
-        
+
         if (!str_starts_with((string) $submittedData['fpmasterquiz']['csvfile'], 'fileadmin/')) {
             $isValid = FALSE;
+            // @extensionScannerIgnoreLine
             $this->addMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_be.xlf:tasks.validate.invalidCsvfile'),
                 ContextualFeedbackSeverity::ERROR
             );
         }
-        
+
         return $isValid;
     }
 

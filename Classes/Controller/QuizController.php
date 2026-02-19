@@ -109,18 +109,21 @@ class QuizController extends ActionController
 
     public function initializeIndexAction(): void
     {
+        // @extensionScannerIgnoreLine
         $this->id = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
 
     public function initializeDetailAction(): void
     {
+        // @extensionScannerIgnoreLine
         $this->id = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
 
     public function initializeChartsAction(): void
     {
+        // @extensionScannerIgnoreLine
         $this->id = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
@@ -375,6 +378,7 @@ class QuizController extends ActionController
             if (intval($this->settings['user']['useCookie']) == -1) {
                 // Store the session in a cookie
                 $frontendUser->setKey('ses', 'qsession' . $quizUid, $session);
+                // @extensionScannerIgnoreLine
                 $frontendUser->storeSessionData();
             } elseif (intval($this->settings['user']['useCookie']) > 0) {
                 setcookie('qsession' . $quizUid, (string) $session, ['expires' => time() + (3600 * 24 * intval($this->settings['user']['useCookie']))]);
@@ -1435,10 +1439,13 @@ class QuizController extends ActionController
         $description = str_replace("  ", " ", $description);
 
         $meta = $metaTagManager->getManagerForProperty('description');
+        // @extensionScannerIgnoreLine
         $meta->addProperty('description', $description);
         $meta = $metaTagManager->getManagerForProperty('og:description');
+        // @extensionScannerIgnoreLine
         $meta->addProperty('og:description', $description);
         $meta = $metaTagManager->getManagerForProperty('og:title');
+        // @extensionScannerIgnoreLine
         $meta->addProperty('og:title', $title);
     }
 
@@ -1524,7 +1531,9 @@ class QuizController extends ActionController
         }
 
         $uidOfCE = 0;
+        // @extensionScannerIgnoreLine
         if (isset($this->request->getAttribute('currentContentObject')->data['uid'])) {
+            // @extensionScannerIgnoreLine
             $uidOfCE = $this->request->getAttribute('currentContentObject')->data['uid'];
         }
         $pageArguments = $this->request->getAttribute('routing');
@@ -1561,6 +1570,7 @@ class QuizController extends ActionController
                     'closure',
                     [
                         'participant' => $this->participant,
+                        // @extensionScannerIgnoreLine
                         'session' => $this->participant->getSession()
                     ],
                     'Quiz',
@@ -1636,7 +1646,9 @@ class QuizController extends ActionController
         }
 
         $uidOfCE = 0;
+        // @extensionScannerIgnoreLine
         if (isset($this->request->getAttribute('currentContentObject')->data['uid'])) {
+            // @extensionScannerIgnoreLine
             $uidOfCE = $this->request->getAttribute('currentContentObject')->data['uid'];
         }
         $pageArguments = $this->request->getAttribute('routing');
@@ -1694,6 +1706,7 @@ class QuizController extends ActionController
                     'closure',
                     [
                         'participant' => $this->participant,
+                        // @extensionScannerIgnoreLine
                         'session' => $this->participant->getSession()
                     ],
                     'Quiz',
@@ -1793,7 +1806,9 @@ class QuizController extends ActionController
         }
 
         $uidOfCE = 0;
+        // @extensionScannerIgnoreLine
         if (isset($this->request->getAttribute('currentContentObject')->data['uid'])) {
+            // @extensionScannerIgnoreLine
             $uidOfCE = $this->request->getAttribute('currentContentObject')->data['uid'];
         }
         $pageArguments = $this->request->getAttribute('routing');
@@ -1842,6 +1857,7 @@ class QuizController extends ActionController
                     'closure',
                     [
                         'participant' => $this->participant,
+                        // @extensionScannerIgnoreLine
                         'session' => $this->participant->getSession()
                     ],
                     'Quiz',
@@ -1992,7 +2008,9 @@ class QuizController extends ActionController
         $pageArguments = $this->request->getAttribute('routing');
         $pid = (int)$pageArguments->getPageId();
         $uidOfCE = 0;
+        // @extensionScannerIgnoreLine
         if (isset($this->request->getAttribute('currentContentObject')->data['uid'])) {
+            // @extensionScannerIgnoreLine
             $uidOfCE = $this->request->getAttribute('currentContentObject')->data['uid'];
         }
 
@@ -2058,7 +2076,9 @@ class QuizController extends ActionController
         $pid = (int)$pageArguments->getPageId();
         $participants = $this->participantRepository->findFromQuizLimit($quiz->getUid(), intval($this->settings['highscoreLimit']));
         $uidOfCE = 0;
+        // @extensionScannerIgnoreLine
         if (isset($this->request->getAttribute('currentContentObject')->data['uid'])) {
+            // @extensionScannerIgnoreLine
             $uidOfCE = $this->request->getAttribute('currentContentObject')->data['uid'];
         }
 
@@ -2098,6 +2118,7 @@ class QuizController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $otherLangs = [];
+        // @extensionScannerIgnoreLine
         $pid = $this->id;
         $quizzes = $this->quizRepository->findFromPid($pid);
         foreach ($quizzes as $quiz) {
@@ -2117,6 +2138,7 @@ class QuizController extends ActionController
     public function detailAction(Quiz $quiz): ResponseInterface
     {
         $questionRepository = GeneralUtility::makeInstance(QuestionRepository::class);
+        // @extensionScannerIgnoreLine
         $pid = $this->id;
         //$uid = (int)$quiz->getUid();
         $updated = false;
@@ -2176,6 +2198,7 @@ class QuizController extends ActionController
     {
         $be = (bool) $this->request->hasArgument('be');
         if ($be) {
+            // @extensionScannerIgnoreLine
             $pid = $this->id;
         } else {
             $pageArguments = $this->request->getAttribute('routing');

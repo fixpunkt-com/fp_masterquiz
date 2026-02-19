@@ -46,6 +46,7 @@ class QuestionController extends ActionController
 
     public function initializeAction(): void
     {
+        // @extensionScannerIgnoreLine
         $this->id = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
@@ -55,6 +56,7 @@ class QuestionController extends ActionController
      */
     public function moveAction(Quiz $quiz, ?Question $question = NULL): ResponseInterface
     {
+        // @extensionScannerIgnoreLine
         $pid = $this->id;
         if ($question instanceof Question) {
             $this->questionRepository->moveToQuiz($question->getUid(), $quiz->getUid());

@@ -49,6 +49,7 @@ class ParticipantController extends ActionController
 
     public function initializeAction(): void
     {
+        // @extensionScannerIgnoreLine
         $this->id = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
     }
@@ -58,6 +59,7 @@ class ParticipantController extends ActionController
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
+        // @extensionScannerIgnoreLine
         $pid = $this->id;
         $qid = $this->request->hasArgument('quiz') ? intval($this->request->getArgument('quiz')) : 0;
         if ($qid !== 0) {
