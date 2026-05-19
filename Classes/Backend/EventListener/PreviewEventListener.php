@@ -121,13 +121,18 @@ final class PreviewEventListener
             return;
         }
 
-        if (in_array($event->getRecord()['CType'], $this->pis)) {
+        if (is_object($event->getRecord())) {
+            $record = $event->getRecord()->getRawRecord()->toArray();
+        } else {
+            $record = $event->getRecord();
+        }
+        if (in_array($record['CType'], $this->pis)) {
             $this->tableData = [];
-            $pi = substr((string) $event->getRecord()['CType'], strpos((string) $event->getRecord()['CType'], '_')+1);
+            $pi = substr((string) $record['CType'], strpos((string) $record['CType'], '_')+1);
             $header = '<strong>' . htmlspecialchars((string) $this->getLanguageService()->sL(self::LLPATH . 'template.' . $pi)) . '</strong>';
-            $this->flexformData = GeneralUtility::xml2array($event->getRecord()['pi_flexform']);
+            $this->flexformData = GeneralUtility::xml2array($record['pi_flexform']);
 
-            $this->getStartingPoint($event->getRecord()['pages']);
+            $this->getStartingPoint($record['pages']);
 
             if (is_array($this->flexformData)) {
                 foreach ($this->recordMapping as $fieldName => $fieldConfiguration) {
@@ -147,7 +152,7 @@ final class PreviewEventListener
                 }
             }
 
-            $event->setPreviewContent($this->renderSettingsAsTable($header, $event->getRecord()['uid']));
+            $event->setPreviewContent($this->renderSettingsAsTable($header, $record['uid']));
         }
     }
 

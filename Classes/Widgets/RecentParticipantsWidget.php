@@ -16,7 +16,7 @@ class RecentParticipantsWidget implements WidgetInterface, RequestAwareWidgetInt
     /**
      * @var array
      */
-    private $options;
+    private array $options;
     private ?ServerRequestInterface $request = null;
 
     public function __construct(

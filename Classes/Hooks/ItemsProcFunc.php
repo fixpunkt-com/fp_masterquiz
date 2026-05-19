@@ -1,34 +1,7 @@
 <?php
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2010 Georg Ringer <typo3@ringerge.org>
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
-/*
- * modified 2019 by Kurt Gusbeth
-*/
 
 namespace Fixpunkt\FpMasterquiz\Hooks;
 
-use TYPO3\CMS\Lang\LanguageService;
 use Fixpunkt\FpMasterquiz\Utility\TemplateLayout;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -57,21 +30,16 @@ class ItemsProcFunc
         $templateLayoutsUtility = GeneralUtility::makeInstance(TemplateLayout::class);
         $templateLayouts = $templateLayoutsUtility->getAvailableTemplateLayouts($pid);
         foreach ($templateLayouts as $layout) {
+            if (isset($GLOBALS['LANG']->sL)) {
+                $text = $GLOBALS['LANG']->sL($layout[0]);
+            } else {
+                $text = $layout[0];
+            }
             $additionalLayout = [
-                htmlspecialchars((string) $this->getLanguageService()->sL($layout[0])),
+                htmlspecialchars((string) $text),
                 $layout[1]
             ];
             $config['items'][] = $additionalLayout;
         }
-    }
-
-    /**
-     * Returns LanguageService
-     *
-     * @return LanguageService
-     */
-    protected function getLanguageService()
-    {
-        return $GLOBALS['LANG'];
     }
 }

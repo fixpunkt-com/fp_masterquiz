@@ -76,6 +76,7 @@ class ParticipantController extends ActionController
 
         $this->moduleTemplate->assign('pid', $pid);
         $this->moduleTemplate->assign('qid', $qid);
+        $this->moduleTemplate->assign('settings', $this->settings);
         $this->moduleTemplate->assign('participants', $participants);
         $this->moduleTemplate->assign('paginator', $participantPaginator);
         $this->moduleTemplate->assign('pagination', $participantPagination);

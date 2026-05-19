@@ -218,3 +218,6 @@ Update-Skript für Rechte hinzugefügt.
 Verhindere, dass ein leeres Input-Feld per Enter abgesendet wird.
 
 Mache das Logging nach typo3_fpmasterquiz_xxx.log optional.
+
+7.3.0:
+Erste Version für TYPO3 14.

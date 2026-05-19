@@ -5,33 +5,6 @@
 ChangeLog
 =========
 
-0.2.0:
-  First release for the TER.
-
-0.3.0:
-  Now optimized for Bootstrap 4.
-  New settings: showAnswersAtFinalPage and template.
-
-0.4.0:
-  Now polls possible, because all submited results are avaiable.
-  New settings: showOwnAnswers, showAllAnswers, templateLayout...
-
-0.5.0:
-  Now for TYPO3 8 and 9. Backend module added. Charts added.
-  Deletion-task changed: delete-flag and real deletion now possible.
-  Lazy loading removed, because delete cascade does not work with lazy loading.
-  New settings: showPageNo and showQuestionNo.
-
-0.6.0:
-  Donut chart added.
-  Session-token added to prevent reload-manipulations.
-  New settings: user.useCookie.
-
-0.7.0:
-  Text-answer now possible. Thanks to Gerald Loss.
-  New settings: user.checkFEuser.
-  Bug fixed: anonymous IP address.
-
 1.0.0:
   Question mode "Show a comment" and "Star rating" implemented.
 
@@ -307,3 +280,6 @@ ChangeLog
   Prevent of sending empty input field with enter.
 
   Make logging into typo3_fpmasterquiz_xxx.log optional.
+
+7.3.0:
+  First version for TYPO3 14.

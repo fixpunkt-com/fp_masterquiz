@@ -1,6 +1,7 @@
 <?php
 
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 defined('TYPO3') || die();
 
@@ -88,7 +89,7 @@ call_user_func(
 
         // register statistics tables for garbage collection
         // see https://docs.typo3.org/c/typo3/cms-scheduler/main/en-us/Installation/BaseTasks/Index.html#table-garbage-collection-task-example
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('scheduler')) {
+        if (ExtensionManagementUtility::isLoaded('scheduler')) {
             // Add deletion task (sheduler)
             $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Fixpunkt\FpMasterquiz\Task\DeleteParticipantTask::class] = [
                 'extension' => 'fp_masterquiz',
@@ -127,3 +128,14 @@ call_user_func(
         }
     }
 );
+
+ExtensionManagementUtility::addTypoScriptSetup('
+    module.tx_fpmasterquiz.settings {
+        pagebrowser {
+          itemsPerPage         = 25
+          insertAbove          = 1
+          insertBelow          = 1
+          maximumNumberOfLinks = 70
+        }
+        debug = 0
+    }');

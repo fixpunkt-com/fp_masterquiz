@@ -36,7 +36,7 @@ class TrueForJavaScriptViewHelper extends AbstractViewHelper
 {
     protected $escapeOutput = false;
 
-    public function render()
+    public function render(): string
     {
         $value = $this->arguments['value'];
         return ($value == '1')?'true':'false';

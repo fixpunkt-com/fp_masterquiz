@@ -3,9 +3,10 @@
 namespace Fixpunkt\FpMasterquiz\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Attribute\Validate;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
+
 /***
  *
  * This file is part of the "Master-Quiz" Extension for TYPO3 CMS.

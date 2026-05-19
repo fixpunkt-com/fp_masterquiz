@@ -128,15 +128,6 @@ module.tx_fpmasterquiz {
     layoutRootPaths.0 = EXT:fp_masterquiz/Resources/Private/Backend/Layouts/
     layoutRootPaths.1 = {$module.tx_fpmasterquiz_mod1.view.layoutRootPath}
   }
-  settings {
-    pagebrowser {
-      itemsPerPage         = 25
-      insertAbove          = 1
-      insertBelow          = 1
-      maximumNumberOfLinks = 70
-    }
-    debug = 0
-  }
 }
 
 module.tx_dashboard {
