@@ -12,6 +12,7 @@ use Fixpunkt\FpMasterquiz\Domain\Model\Quiz;
 use Fixpunkt\FpMasterquiz\Domain\Model\Selected;
 use Fixpunkt\FpMasterquiz\Domain\Model\Question;
 use Fixpunkt\FpMasterquiz\PageTitle\QuizPageTitleProvider;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -2223,6 +2224,7 @@ class QuizController extends ActionController
      * @param array $variables variables to be passed to the Fluid view
      * @param boolean $toAdmin email to the admin?
      * @return boolean TRUE on success, otherwise false
+     * @throws TransportExceptionInterface
      */
     protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName, array $variables = [], $toAdmin = false): bool
     {
@@ -2268,8 +2270,9 @@ class QuizController extends ActionController
         );
         $message->subject($subject);
         $message->html($emailBodyHtml);
-        $message->send();
-        return $message->isSent();
+        $mailer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailerInterface::class); // oder \TYPO3\CMS\Core\Mail\Mailer::class);
+        $mailer->send($message);
+        return true;
     }
 
 

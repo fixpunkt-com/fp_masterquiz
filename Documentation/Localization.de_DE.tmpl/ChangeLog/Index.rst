@@ -221,3 +221,6 @@ Mache das Logging nach typo3_fpmasterquiz_xxx.log optional.
 
 7.3.0:
 Erste Version für TYPO3 14.
+
+7.3.1:
+Bugfix für TYPO3 14.

@@ -283,3 +283,6 @@ ChangeLog
 
 7.3.0:
   First version for TYPO3 14.
+
+7.3.1:
+  Bugfix for TYPO3 14.
