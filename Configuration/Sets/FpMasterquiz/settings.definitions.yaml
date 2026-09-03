@@ -1,0 +1,51 @@
+settings:
+  plugin.tx_fpmasterquiz.view.templateRootPath:
+    label: 'Path to template root (FE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Templates/'
+  plugin.tx_fpmasterquiz.view.partialRootPath:
+    label: 'Path to template partials (FE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Partials/'
+  plugin.tx_fpmasterquiz.view.layoutRootPath:
+    label: 'Path to template layouts (FE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Layouts/'
+  plugin.tx_fpmasterquiz.persistence.storagePid:
+    label: 'Default storage PID'
+    description: 'Default storage PID'
+    type: string
+    default: ''
+  plugin.tx_fpmasterquiz.persistence.recursive:
+    label: 'Recursive mode'
+    description: 'The number of subpage levels which are searched for records.'
+    type: int
+    default: 0
+  plugin.tx_fpmasterquiz.settings.typeNum:
+    label: 'typeNum for AJAX call'
+    description: 'Default is 190675.'
+    type: int
+    default: 190675
+  module.tx_fpmasterquiz.view.templateRootPath:
+    label: 'Path to template root (BE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Templates/'
+  module.tx_fpmasterquiz.view.partialRootPath:
+    label: 'Path to template partials (BE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Partials/'
+  module.tx_fpmasterquiz.view.layoutRootPath:
+    label: 'Path to template layouts (BE)'
+    description: 'Default path'
+    type: string
+    default: 'EXT:fp_masterquiz/Resources/Private/Layouts/'
+  module.tx_fpmasterquiz.persistence.storagePid:
+    label: 'Default storage PID'
+    description: 'Default storage PID'
+    type: string
+    default: ''
