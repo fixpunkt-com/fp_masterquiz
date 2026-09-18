@@ -5,6 +5,7 @@ namespace Fixpunkt\FpMasterquiz\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Attribute\ORM\Cascade;
+use TYPO3\CMS\Extbase\Attribute\ORM\Lazy;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -138,6 +139,7 @@ class Participant extends AbstractEntity
      * @var ObjectStorage<Selected>
      */
     #[Cascade(['value' => 'remove'])]
+    #[Lazy]
     protected $selections;
 
     /**

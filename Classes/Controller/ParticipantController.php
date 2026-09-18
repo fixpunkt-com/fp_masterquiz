@@ -5,7 +5,7 @@ namespace Fixpunkt\FpMasterquiz\Controller;
 use Fixpunkt\FpMasterquiz\Domain\Repository\ParticipantRepository;
 use Fixpunkt\FpMasterquiz\Domain\Model\Participant;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ResponseInterface;
@@ -68,10 +68,9 @@ class ParticipantController extends ActionController
             $participants = $this->participantRepository->findFromPid($pid);
         }
 
-        $participantArray = $participants ? $participants->toArray() : [];
-
-        $itemsPerPage = (isset($this->settings['pagebrowser']['itemsPerPage'])) ? $this->settings['pagebrowser']['itemsPerPage'] : 100;
-        $participantPaginator = new ArrayPaginator($participantArray, $currentPage, $itemsPerPage);
+        $itemsPerPage = (isset($this->settings['pagebrowser']['itemsPerPage'])) ? (int)$this->settings['pagebrowser']['itemsPerPage'] : 100;
+        // paginate in the database: only the shown participants are mapped to objects
+        $participantPaginator = new QueryResultPaginator($participants, $currentPage, $itemsPerPage);
         $participantPagination = new SimplePagination($participantPaginator);
 
         $this->moduleTemplate->assign('pid', $pid);
