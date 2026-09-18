@@ -131,6 +131,18 @@
 				<source>last page</source>
 				<target>letzte Seite</target>
 			</trans-unit>
+			<trans-unit id="folders" resname="folders">
+				<source>Folders with quizzes</source>
+				<target>Ordner mit Quizzen</target>
+			</trans-unit>
+			<trans-unit id="folders.folder" resname="folders.folder">
+				<source>Folder</source>
+				<target>Ordner</target>
+			</trans-unit>
+			<trans-unit id="folders.quizzes" resname="folders.quizzes">
+				<source>Quizzes</source>
+				<target>Quizze</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

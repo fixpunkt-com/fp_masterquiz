@@ -109,6 +109,32 @@ class QuizRepository extends Repository
     }
 
     /**
+     * Folders (pids) that contain quizzes in the default language, with the number of quizzes
+     *
+     * @return array<int, array{pid: int, quizzes: int}>
+     */
+    public function findFoldersWithQuizzes(): array
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_fpmasterquiz_domain_model_quiz');
+        $rows = $queryBuilder
+            ->select('pid')
+            ->addSelectLiteral('COUNT(*) AS quizzes')
+            ->from('tx_fpmasterquiz_domain_model_quiz')
+            ->where(
+                $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+            )
+            ->groupBy('pid')
+            ->orderBy('pid')
+            ->executeQuery()
+            ->fetchAllAssociative();
+        $folders = [];
+        foreach ($rows as $row) {
+            $folders[] = ['pid' => (int)$row['pid'], 'quizzes' => (int)$row['quizzes']];
+        }
+        return $folders;
+    }
+
+    /**
      * Get the PIDs
      *
      * @return array
