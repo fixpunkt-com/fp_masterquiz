@@ -43,5 +43,27 @@
   <p><f:translate key="LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_mod1.xlf:nothing" default="Nothing found." /></p>
 </f:else>
 </f:if>
+<f:if condition="{folders -> f:count()} > 0">
+<h2><f:translate key="LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_mod1.xlf:folders" default="Folders with quizzes" /></h2>
+<div class="table-responsive">
+<table class="table">
+	<tr>
+		<th><f:translate key="LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_mod1.xlf:folders.folder" default="Folder" /></th>
+		<th><f:translate key="LLL:EXT:fp_masterquiz/Resources/Private/Language/locallang_mod1.xlf:folders.quizzes" default="Quizzes" /></th>
+	</tr>
+	<f:for each="{folders}" as="folder">
+		<tr>
+			<td>
+				<f:if condition="{folder.current}">
+					<f:then><strong>{folder.title}</strong> [{folder.uid}]</f:then>
+					<f:else><f:be.link route="fp_masterquiz" parameters="{id: folder.uid}">{folder.title}</f:be.link> [{folder.uid}]</f:else>
+				</f:if>
+			</td>
+			<td>{folder.quizzes}</td>
+		</tr>
+	</f:for>
+</table>
+</div>
+</f:if>
 </f:section>
 </html>

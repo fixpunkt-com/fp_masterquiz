@@ -26,6 +26,8 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
@@ -2129,8 +2131,34 @@ class QuizController extends ActionController
         $this->moduleTemplate->assign('pid', $pid);
         $this->moduleTemplate->assign('quizzes', $quizzes);
         $this->moduleTemplate->assign('otherQuizzes', $otherLangs);
+        $this->moduleTemplate->assign('folders', $this->getFoldersWithQuizzes($pid));
         $this->addDocHeaderDropDown('index');
         return $this->moduleTemplate->renderResponse('Quiz/Index');
+    }
+
+    /**
+     * Folders that contain quizzes and are accessible for the current backend user,
+     * so that the module can offer them for navigation (e.g. when opened without a folder).
+     *
+     * @return array<int, array{uid: int, title: string, quizzes: int, current: bool}>
+     */
+    protected function getFoldersWithQuizzes(int $currentPid): array
+    {
+        $folders = [];
+        $permsClause = $GLOBALS['BE_USER']->getPagePermsClause(Permission::PAGE_SHOW);
+        foreach ($this->quizRepository->findFoldersWithQuizzes() as $folder) {
+            $page = BackendUtility::readPageAccess($folder['pid'], $permsClause);
+            if ($page === false) {
+                continue;
+            }
+            $folders[] = [
+                'uid' => $folder['pid'],
+                'title' => (string)$page['title'],
+                'quizzes' => $folder['quizzes'],
+                'current' => $folder['pid'] === $currentPid,
+            ];
+        }
+        return $folders;
     }
 
     /**

@@ -99,6 +99,15 @@
 			<trans-unit id="pagination.last" resname="pagination.last">
 				<source>last page</source>
 			</trans-unit>
+			<trans-unit id="folders" resname="folders">
+				<source>Folders with quizzes</source>
+			</trans-unit>
+			<trans-unit id="folders.folder" resname="folders.folder">
+				<source>Folder</source>
+			</trans-unit>
+			<trans-unit id="folders.quizzes" resname="folders.quizzes">
+				<source>Quizzes</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
