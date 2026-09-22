@@ -18,7 +18,9 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -1290,70 +1292,112 @@ class QuizController extends ActionController
      */
     protected function setAllUserAnswersForOneQuestion(Question &$oneQuestion, int $pid, bool $be): string
     {
-        $votes = 0;
-        $votesTotal = 0;
         $debug = '';
-        $allResults = [];
-        $allCategoryResults = [];
         $questionID = $oneQuestion->getUid();
         $isEnterQuestion = (($oneQuestion->getQmode() == 3) || ($oneQuestion->getQmode() == 5));
         if ($this->withDebug()) {
             $debug .= "\nquestion :" . $questionID;
         }
 
-        if ($be) {
-            $allAnsweredQuestions = $this->selectedRepository->findFromPidAndQuestion($pid, $questionID);
-        } else {
-            $allAnsweredQuestions = $this->selectedRepository->findBy(['question' => $questionID]);
+        // The statistics are aggregated in the database: a quiz with some thousand participants has
+        // tens of thousands of "selected" records, mapping them to objects (plus one query per record
+        // for the selected answers) ran into the execution time limit.
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $selectedTable = 'tx_fpmasterquiz_domain_model_selected';
+        $mmTable = 'tx_fpmasterquiz_selected_answer_mm';
+
+        $selectedConstraints = static function (QueryBuilder $queryBuilder, string $alias) use ($questionID, $pid, $be): array {
+            $constraints = [
+                $queryBuilder->expr()->eq($alias . '.question', $queryBuilder->createNamedParameter($questionID, Connection::PARAM_INT)),
+            ];
+            if ($be) {
+                $constraints[] = $queryBuilder->expr()->eq($alias . '.pid', $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT));
+            }
+            return $constraints;
+        };
+
+        // number of users who answered this question
+        $queryBuilder = $connectionPool->getQueryBuilderForTable($selectedTable);
+        $votes = (int)$queryBuilder
+            ->count('s.uid')
+            ->from($selectedTable, 's')
+            ->where(...$selectedConstraints($queryBuilder, 's'))
+            ->executeQuery()
+            ->fetchOne();
+
+        // titles of the possible answers, needed to match the entered text of enter questions
+        $answerTitles = [];
+        foreach ($oneQuestion->getAnswers() as $oneAnswer) {
+            $answerTitles[$oneAnswer->getUid()] = $oneAnswer->getTitle();
         }
 
-        // alle User-Ergebnisse durchgehen:
-        foreach ($allAnsweredQuestions as $aSelectedQuestion) {
-            $votes++;
-            // alle Antworten auf diese Frage:
-            foreach ($aSelectedQuestion->getAnswers() as $oneAnswer) {
-                if ($this->withDebug()) {
-                    $debug .= "\n all: " . $oneAnswer->getTitle() . ': ' . $oneAnswer->getPoints() . "P";
-                }
-
-                if (($isEnterQuestion && ($aSelectedQuestion->getEntered() == $oneAnswer->getTitle())) || !$isEnterQuestion) {
-                    if (isset($allResults[$oneAnswer->getUid()])) {
-                        $allResults[$oneAnswer->getUid()]++;
-                    } else {
-                        $allResults[$oneAnswer->getUid()] = 1;
-                    }
-                } elseif ($be) {
-                    // Text-Antworten anderer interessieren uns nur im Backend
-                    if (isset($allResults['text'])) {
-                        if (!is_array($allResults['text'])) {
-                            $allResults['text'] = [];
-                        }
-
-                        if (isset($allResults['text'][$aSelectedQuestion->getEntered()])) {
-                            if (!is_array($allResults['text'][$aSelectedQuestion->getEntered()])) {
-                                $allResults['text'][$aSelectedQuestion->getEntered()] = [];
-                            }
-
-                            if (isset($allResults['text'][$aSelectedQuestion->getEntered()]['sum'])) {
-                                $allResults['text'][$aSelectedQuestion->getEntered()]['sum']++;
-                            } else {
-                                $allResults['text'][$aSelectedQuestion->getEntered()]['sum'] = 1;
-                            }
-                        }
-                    } else {
-                        $allResults['text'] = [];
-                    }
-                }
+        // number of users per selected answer; for enter questions only when the entered text is the answer
+        $queryBuilder = $connectionPool->getQueryBuilderForTable($selectedTable);
+        $queryBuilder
+            ->select('mm.uid_foreign AS answer')
+            ->addSelectLiteral('COUNT(*) AS votes')
+            ->from($selectedTable, 's')
+            ->join('s', $mmTable, 'mm', $queryBuilder->expr()->eq('mm.uid_local', $queryBuilder->quoteIdentifier('s.uid')))
+            ->where(...$selectedConstraints($queryBuilder, 's'))
+            ->groupBy('mm.uid_foreign');
+        if ($isEnterQuestion) {
+            $queryBuilder->addSelect('s.entered')->addGroupBy('s.entered');
+        }
+        $allResults = [];
+        foreach ($queryBuilder->executeQuery()->fetchAllAssociative() as $row) {
+            $answerUid = (int)$row['answer'];
+            if ($isEnterQuestion && (!isset($answerTitles[$answerUid]) || $row['entered'] != $answerTitles[$answerUid])) {
+                continue;
             }
+            $allResults[$answerUid] = ($allResults[$answerUid] ?? 0) + (int)$row['votes'];
+        }
 
-            if ($oneQuestion->getQmode() == 8) {
-                // ausgewählte Kategorien einer Antwort
-                $catAnswers = unserialize($aSelectedQuestion->getEntered());
+        // text answers: what users entered that is not one of the answers (backend only)
+        $textAnswers = [];
+        $textVotes = 0;
+        if ($be && $isEnterQuestion) {
+            $queryBuilder = $connectionPool->getQueryBuilderForTable($selectedTable);
+            $rows = $queryBuilder
+                ->select('s.entered')
+                ->addSelectLiteral('COUNT(*) AS votes')
+                ->from($selectedTable, 's')
+                ->where(...$selectedConstraints($queryBuilder, 's'))
+                ->groupBy('s.entered')
+                ->orderBy('votes', 'DESC')
+                ->executeQuery()
+                ->fetchAllAssociative();
+            foreach ($rows as $row) {
+                $entered = (string)$row['entered'];
+                if ($entered === '' || in_array($entered, $answerTitles)) {
+                    continue;
+                }
+                $sum = (int)$row['votes'];
+                $textVotes += $sum;
+                $textAnswers[$entered] = [
+                    'sum' => $sum,
+                    'percent' => number_format($votes ? 100 * ($sum / $votes) : 0, 2, '.', ''),
+                ];
+            }
+        }
+
+        // categories selected per answer (qmode 8): serialized in "entered"
+        $allCategoryResults = [];
+        if ($oneQuestion->getQmode() == 8) {
+            $queryBuilder = $connectionPool->getQueryBuilderForTable($selectedTable);
+            $result = $queryBuilder
+                ->select('s.entered')
+                ->from($selectedTable, 's')
+                ->where(...$selectedConstraints($queryBuilder, 's'))
+                ->executeQuery();
+            while (($row = $result->fetchAssociative()) !== false) {
+                $catAnswers = unserialize((string)$row['entered'], ['allowed_classes' => false]);
+                if (!is_array($catAnswers)) {
+                    continue;
+                }
                 foreach ($catAnswers as $key => $value) {
                     if (!isset($allCategoryResults[$key]) || !is_array($allCategoryResults[$key])) {
                         $allCategoryResults[$key] = [];
                     }
-
                     if (isset($allCategoryResults[$key][$value])) {
                         $allCategoryResults[$key][$value]++;
                     } else {
@@ -1364,28 +1408,22 @@ class QuizController extends ActionController
         }
 
         // gesammeltes speichern bei: alle möglichen Antworten einer Frage...
+        $votesTotal = $textVotes;
         foreach ($oneQuestion->getAnswers() as $oneAnswer) {
-            $thisVotes = isset($allResults[$oneAnswer->getUid()]) ? intval($allResults[$oneAnswer->getUid()]) : 0;
+            $thisVotes = $allResults[$oneAnswer->getUid()] ?? 0;
             $votesTotal += $thisVotes;
-            if ($be && $isEnterQuestion && is_array($allResults) && is_array($allResults['text'])) {
-                // bei Text-Antworten alle Textantworten berücksichtigen
-                foreach ($allResults['text'] as $otherKey => $otherValue) {
-                    $votesTotal += $otherValue['sum'];
-                    $allResults['text'][$otherKey]['percent'] = number_format(100 * ($otherValue['sum'] / $votes), 2, '.', '');
-                }
-
-                $oneQuestion->setTextAnswers($allResults['text']);
-            }
-
             $oneAnswer->setAllAnswers($thisVotes);
             if ($oneQuestion->getQmode() == 8) {
                 $oneAnswer->setAllCategoryAnswers($allCategoryResults);
             }
         }
+        if ($be && $isEnterQuestion) {
+            $oneQuestion->setTextAnswers($textAnswers);
+        }
 
         // ... und Prozentwerte speichern
         foreach ($oneQuestion->getAnswers() as $oneAnswer) {
-            $thisVotes = isset($allResults[$oneAnswer->getUid()]) ? intval($allResults[$oneAnswer->getUid()]) : 0;
+            $thisVotes = $allResults[$oneAnswer->getUid()] ?? 0;
             $percentage = 0;
             if ($votes !== 0) {
                 $percentage = 100 * ($thisVotes / $votes);
