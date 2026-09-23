@@ -286,3 +286,10 @@ ChangeLog
 
 7.3.1:
   Bugfix for TYPO3 14.
+
+7.4.0:
+  Paginate backend participant list in the database.
+
+  Aggregate chart statistics in the database.
+
+  Backend module: overview of folders that contain quizzes.

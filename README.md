@@ -1,6 +1,6 @@
 # fp_masterquiz
 
-version 7.3.1
+version 7.4.0
 
 TYPO3 extension to create a quiz, poll or test. The participant result will be saved in the DB too and can be deleted automatically via Scheduler.
 
@@ -69,11 +69,13 @@ Changes in 7.2.4:
 Changes in 7.2.5:
 - Bugfix: prevent the final page when there is no participant-uid.
 
-Changes in 7.3.0:
+Changes in 7.3.0/1:
 - First version for TYPO3 14.
 
-Changes in 7.3.1:
-- Bugfix for TYPO3 14.
+Changes in 7.4.0:
+- Paginate backend participant list in the database.
+- Aggregate chart statistics in the database.
+- Backend module: overview of folders that contain quizzes.
 
 You find the whole changelog here:
 https://raw.githubusercontent.com/fixpunkt-com/fp_masterquiz/refs/heads/master/Documentation/ChangeLog/Index.rst
