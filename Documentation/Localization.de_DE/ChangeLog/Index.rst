@@ -224,3 +224,10 @@ Erste Version für TYPO3 14.
 
 7.3.1:
 Bugfix für TYPO3 14.
+
+7.4.0:
+Paginierung der Teilnehmer im Backend über die Datenbank.
+
+Chart-Statistiken direkt über die Datenbank bilden.
+
+Backend-Modul: Liste aller Ordner mit Quizzen erstellt.
