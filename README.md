@@ -77,5 +77,8 @@ Changes in 7.4.0:
 - Aggregate chart statistics in the database.
 - Backend module: overview of folders that contain quizzes.
 
+Changes in 7.4.1:
+- Bugfix: deletion of a participant in the backend-module deletes now the selections of the participant too.
+
 You find the whole changelog here:
 https://raw.githubusercontent.com/fixpunkt-com/fp_masterquiz/refs/heads/master/Documentation/ChangeLog/Index.rst

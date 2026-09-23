@@ -5,6 +5,7 @@ namespace Fixpunkt\FpMasterquiz\Controller;
 use Fixpunkt\FpMasterquiz\Domain\Repository\ParticipantRepository;
 use Fixpunkt\FpMasterquiz\Domain\Model\Participant;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -117,8 +118,19 @@ class ParticipantController extends ActionController
      */
     public function deleteAction(Participant $participant): ResponseInterface
     {
+        $questions = [];
+        $selectionRepository = GeneralUtility::makeInstance(\Fixpunkt\FpMasterquiz\Domain\Repository\SelectedRepository::class);
         if ($participant->getUid() > 0) {
+            foreach ($participant->getSelections() as $selection) {
+                $uid = $selection->getQuestion()->getUid();
+                $questions[$uid] = $uid;
+            }
+            foreach ($questions as $question) {
+                // Die Antworten eines Users auch löschen! Hier wird sofort gelöscht!
+                $selectionRepository->deleteByParticipantAndQuestion($participant->getUid(), $question);
+            }
             $this->addFlashMessage($participant->getName() . ' deleted.', '', ContextualFeedbackSeverity::WARNING);
+            // hier wird nur das delete-flag gesetzt!
             $this->participantRepository->remove($participant);
         }
 

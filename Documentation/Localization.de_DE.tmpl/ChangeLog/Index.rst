@@ -231,3 +231,6 @@ Paginierung der Teilnehmer im Backend über die Datenbank.
 Chart-Statistiken direkt über die Datenbank bilden.
 
 Backend-Modul: Liste aller Ordner mit Quizzen erstellt.
+
+7.4.1:
+Bugfix: Die Löschung eines Teilnehmers im Backend-Modul löscht nun auch die zugehörigen Einträge.

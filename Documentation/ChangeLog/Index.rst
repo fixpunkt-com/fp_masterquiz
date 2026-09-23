@@ -293,3 +293,6 @@ ChangeLog
   Aggregate chart statistics in the database.
 
   Backend module: overview of folders that contain quizzes.
+
+7.4.1:
+  Bugfix: deletion of a participant in the backend-module deletes now the selections of the participant too.

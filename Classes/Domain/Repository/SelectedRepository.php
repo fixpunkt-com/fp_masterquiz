@@ -113,7 +113,7 @@ class SelectedRepository extends Repository
     }
 
     /**
-     * Delete entry for participant and question. Wird doch nicht gebraucht!
+     * Delete entry for participant and question.
      *
      * @param integer $participantId Participant-UID
      * @param integer $questionId Question-UID
